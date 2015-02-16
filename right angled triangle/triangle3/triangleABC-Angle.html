@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Right Angled Triangle</title>
+    <link rel="stylesheet" href="./include/style.css">
+  </head>
+  <body>
+    <header>Right Angled Triangle </header>
+	<div>lengths:<br>
+			AB = <span id = "AB"> <!-- length here --> </span>  px
+			BC = <span id = "BC"> <!-- length here --> </span>  px
+			AC = <span id = "AC"> <!-- length here --> </span>  px
+			<br>angles:<br>
+			angle A = <span id = "angleA"> <!-- angle here --> </span>  deg. 
+			angle C = <span id = "angleC"> <!-- angle here --> </span>  deg. <br>
+			sum of angles: A + 90 + C= <span id = "angleTotal"> <!-- angle here --> </span>  deg. <span id = "incorrect"> <!-- text here--></span>
+	</div>
+    <canvas id="canvas" width="300" height="300"></canvas>
+	
+    <aside><a href = "http://www.apress.com/9781430236658">based on Foundation HTML5 Animation with JavaScript</a></aside>
+    <script src="./include/utils.js"></script>
+    <script src="./classes/triangleABC-Angle.js"></script>
+    <script>
+    window.onload = function () {
+		  var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          mouse = utils.captureMouse(canvas),
+          
+		  triangle = new Triangle(); // instance 
+		  
+        
+		  (function drawFrame () {
+			 window.requestAnimationFrame(drawFrame, canvas);
+			 context.clearRect(0, 0, canvas.width, canvas.height);
+			 triangle.xLeft = canvas.width / 2;
+			 triangle.yLeft = canvas.height / 2;
+			 triangle.x = mouse.x;
+			 triangle.y = mouse.y;
+			 triangle.draw(context);
+			 
+			 //display the  lenghts and angles
+			 document.getElementById("AB").innerHTML = triangle.AB();
+			 document.getElementById("BC").innerHTML = triangle.BC();
+			 document.getElementById("AC").innerHTML = triangle.AC();
+			 document.getElementById("angleA").innerHTML = triangle.angleA();
+			 document.getElementById("angleC").innerHTML = triangle.angleC();
+			 document.getElementById("angleTotal").innerHTML = Math.abs(triangle.angleA() )+ Math.abs(triangle.angleC()) + 90;
+			 if ((Math.abs(triangle.angleA())+ Math.abs(triangle.angleC()) + 90) > 180) {
+					document.getElementById("incorrect").innerHTML = "explain why number is incorrect";}
+			else {
+					document.getElementById("incorrect").innerHTML = " ";}
+		  }());
+    };
+	</script>
+  </body>
+</html>
